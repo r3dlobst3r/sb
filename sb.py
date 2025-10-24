@@ -693,17 +693,10 @@ def update_saltbox(saltbox_repo_path, saltbox_playbook_file, verbosity=0):
 
     manage_ansible_venv(force_recreate=False)
 
-    # Define custom commands for Saltbox update
-    custom_commands = [
-        f"cp {saltbox_repo_path}/defaults/ansible.cfg.default "
-        f"{saltbox_repo_path}/ansible.cfg"
-    ]
-
     # Check commit hash before update
     old_commit_hash = get_git_commit_hash(saltbox_repo_path)
 
-    git_fetch_and_reset(saltbox_repo_path, "master",
-                        custom_commands=custom_commands)
+    git_fetch_and_reset(saltbox_repo_path, "master")
 
     # Always update saltbox.fact during update
     download_and_install_saltbox_fact(always_update=False)
@@ -752,17 +745,10 @@ def update_sandbox(sandbox_repo_path, sandbox_playbook_file, verbosity=0):
         print(f"Error: {sandbox_repo_path} does not exist or is not a directory.")
         sys.exit(1)
 
-    # Define custom commands for Sandbox update
-    custom_commands = [
-        f"cp {sandbox_repo_path}/defaults/ansible.cfg.default "
-        f"{sandbox_repo_path}/ansible.cfg"
-    ]
-
     # Check commit hash before update
     old_commit_hash = get_git_commit_hash(sandbox_repo_path)
 
-    git_fetch_and_reset(sandbox_repo_path, "master",
-                        custom_commands=custom_commands)
+    git_fetch_and_reset(sandbox_repo_path, "master")
 
     # Run Settings role with specified tags and skip-tags
     tags = ['settings']
@@ -1165,15 +1151,10 @@ def handle_branch(arguments):
         arguments: Command line arguments containing branch_name and verbose.
     """
     print("Switching Saltbox repository branch...")
-    custom_commands = [
-        f"cp {SALTBOX_REPO_PATH}/defaults/ansible.cfg.default "
-        f"{SALTBOX_REPO_PATH}/ansible.cfg"
-    ]
 
     git_fetch_and_reset(
         SALTBOX_REPO_PATH,
-        arguments.branch_name,
-        custom_commands=custom_commands
+        arguments.branch_name
     )
 
     # Always update saltbox.fact during branch change
@@ -1210,15 +1191,10 @@ def handle_sandbox_branch(arguments):
         arguments: Command line arguments containing branch_name and verbose.
     """
     print("Switching Sandbox repository branch...")
-    custom_commands = [
-        f"cp {SANDBOX_REPO_PATH}/defaults/ansible.cfg.default "
-        f"{SANDBOX_REPO_PATH}/ansible.cfg"
-    ]
 
     git_fetch_and_reset(
         SANDBOX_REPO_PATH,
-        arguments.branch_name,
-        custom_commands=custom_commands
+        arguments.branch_name
     )
 
     # Run Settings role with specified tags and skip-tags
