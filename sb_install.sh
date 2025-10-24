@@ -16,6 +16,7 @@
 VERBOSE=false
 VERBOSE_OPT=""
 SB_REPO="https://github.com/r3dlobst3r/sb.git"
+SB_GO_REPO="https://github.com/r3dlobst3r/sb-go"
 SB_PATH="/srv/git/sb"
 RELEASE_FILE="/srv/git/sb/release.txt"
 TARGET_BINARY_PATH="/srv/git/sb/sb"
@@ -55,38 +56,21 @@ download_binary() {
     local temp_binary_path
     local file_type
     local arch
-    local binary_suffix
+    local binary_name
 
     if ! command -v file > /dev/null 2>&1; then
         run_cmd sudo apt-get update
         run_cmd sudo apt-get install -y file
     fi
 
-    if [ ! -f "${RELEASE_FILE}" ]; then
-        echo "Error: ${RELEASE_FILE} does not exist." >&2
-        exit 1
-    fi
-
-    github_tag=$(head -n 1 "${RELEASE_FILE}" | tr -d '[:space:]')
-    if [[ ! "$github_tag" =~ ^refs/tags/ ]]; then
-        echo "Error: Invalid tag format in ${RELEASE_FILE}." >&2
-        exit 1
-    fi
-
-    version=${github_tag#refs/tags/}
-    if [ -z "$version" ]; then
-        echo "Error: No version found in tag $github_tag." >&2
-        exit 1
-    fi
-
-    # Determine architecture suffix for binary
+    # Determine architecture and binary name for sb-go
     arch=$(uname -m)
     case "$arch" in
         x86_64)
-            binary_suffix=""
+            binary_name="sb_linux_amd64"
             ;;
         aarch64)
-            binary_suffix="-arm64"
+            binary_name="sb_linux_arm64"
             ;;
         *)
             echo "Error: Unsupported architecture: $arch" >&2
@@ -94,9 +78,16 @@ download_binary() {
             ;;
     esac
 
-    # Extract repo URL from SB_REPO variable (remove .git suffix)
-    repo_url="${SB_REPO%.git}"
-    download_url="${repo_url}/releases/download/$version/sb${binary_suffix}"
+    # Use latest release from sb-go repo
+    # Get the latest release tag
+    version=$(curl -s "https://api.github.com/repos/r3dlobst3r/sb-go/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+    
+    if [ -z "$version" ]; then
+        echo "Error: Could not determine latest release version from sb-go repo." >&2
+        exit 1
+    fi
+
+    download_url="${SB_GO_REPO}/releases/download/${version}/${binary_name}"
 
     temp_binary_path="${TARGET_BINARY_PATH}.tmp"
     run_cmd curl -L -o "${temp_binary_path}" "${download_url}"
