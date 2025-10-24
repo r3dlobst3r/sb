@@ -23,6 +23,7 @@ TARGET_BINARY_PATH="/srv/git/sb/sb"
 SB_INSTALL_SCRIPT="$SB_PATH/sb_install.sh"
 SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
 BRANCH="arm_support"
+SB_BRANCH="role-refactor-arm-support"
 
 ################################
 # Functions
@@ -243,6 +244,6 @@ shopt -u nullglob
 run_cmd bash -H $SB_PATH/sb_dep.sh $VERBOSE_OPT
 
 # Clone Saltbox Repo
-run_cmd bash -H $SB_PATH/sb_repo.sh -b "${BRANCH}" $VERBOSE_OPT
+run_cmd bash -H $SB_PATH/sb_repo.sh -b "${SB_BRANCH}" $VERBOSE_OPT
 
 echo "Saltbox Dependencies were successfully installed."
