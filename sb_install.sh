@@ -23,7 +23,7 @@ TARGET_BINARY_PATH="/srv/git/sb/sb"
 SB_INSTALL_SCRIPT="$SB_PATH/sb_install.sh"
 SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
 BRANCH="arm_support"
-SB_BRANCH="arm_support"
+SB_BRANCH="role-refactor-arm-support"
 
 ################################
 # Functions
