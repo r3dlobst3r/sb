@@ -46,7 +46,7 @@ jobs:
         run: |
           VERSION=${GITHUB_REF#refs/tags/v}
           echo "Building with version ${VERSION}"
-          sed -i "s/__version__ = \"0.0.0\"/__version__ = \"${VERSION}\"/" sb.py
+          sed -i "s|__version__ = \"0.0.0\"|__version__ = \"${VERSION}\"|" sb.py
 
       - name: Compile binary
         run: ./venv/bin/python -m nuitka sb.py --onefile -o ${{ matrix.binary_name }} && chmod +x ${{ matrix.binary_name }}
