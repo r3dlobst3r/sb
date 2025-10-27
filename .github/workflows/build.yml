@@ -44,7 +44,7 @@ jobs:
       - name: Prepare script with version
         if: startsWith(github.ref, 'refs/tags/') && github.event_name != 'pull_request'
         run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
+          VERSION=${GITHUB_REF##refs/tags/}
           echo "Building with version ${VERSION}"
           sed -i "s|__version__ = \"0.0.0\"|__version__ = \"${VERSION}\"|" sb.py
 
