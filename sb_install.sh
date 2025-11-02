@@ -15,13 +15,13 @@
 
 VERBOSE=false
 VERBOSE_OPT=""
-SB_REPO="https://github.com/saltyorg/sb.git"
+SB_REPO="https://github.com/r3dlobst3r/sb.git"
 SB_PATH="/srv/git/sb"
 RELEASE_FILE="/srv/git/sb/release.txt"
 TARGET_BINARY_PATH="/srv/git/sb/sb"
 SB_INSTALL_SCRIPT="$SB_PATH/sb_install.sh"
 SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
-BRANCH="master"
+BRANCH="feature/cloudflare-tunnel-support"
 
 ################################
 # Functions
@@ -77,7 +77,7 @@ download_binary() {
         exit 1
     fi
 
-    download_url="https://github.com/saltyorg/sb/releases/download/$version/sb"
+    download_url="https://github.com/r3dlobst3r/sb/releases/download/$version/sb"
 
     temp_binary_path="${TARGET_BINARY_PATH}.tmp"
     run_cmd curl -L -o "${temp_binary_path}" "${download_url}"
