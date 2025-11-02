@@ -13,7 +13,7 @@
 ################################
 
 VERBOSE=false
-BRANCH="master"
+BRANCH="feature/cloudflare-tunnel-support"
 SALTBOX_PATH="/srv/git/saltbox"
 SALTBOX_REPO="https://github.com/r3dlobst3r/saltbox.git"
 
@@ -23,7 +23,7 @@ SALTBOX_REPO="https://github.com/r3dlobst3r/saltbox.git"
 
 usage () {
     echo "Usage:"
-    echo "    sb_repo -b <branch>    Repo branch to use. Default is 'master'."
+    echo "    sb_repo -b <branch>    Repo branch to use. Default is 'feature/cloudflare-tunnel-support'."
     echo "    sb_repo -v             Enable Verbose Mode."
     echo "    sb_repo -h             Display this help message."
 }

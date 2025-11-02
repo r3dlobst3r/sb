@@ -491,7 +491,7 @@ def run_ansible_playbook(repo_path, playbook_path, ansible_binary_path,
     print(f"\nPlaybook {playbook_path} executed successfully.\n")
 
 
-def git_fetch_and_reset(repo_path, default_branch='master',
+def git_fetch_and_reset(repo_path, default_branch='feature/cloudflare-tunnel-support',
                         post_fetch_script=None, custom_commands=None):
     """
     Fetch and reset a Git repository to a specified branch.
@@ -696,7 +696,7 @@ def update_saltbox(saltbox_repo_path, saltbox_playbook_file, verbosity=0):
     # Check commit hash before update
     old_commit_hash = get_git_commit_hash(saltbox_repo_path)
 
-    git_fetch_and_reset(saltbox_repo_path, "master")
+    git_fetch_and_reset(saltbox_repo_path, "feature/cloudflare-tunnel-support")
 
     # Always update saltbox.fact during update
     download_and_install_saltbox_fact(always_update=False)
@@ -748,7 +748,7 @@ def update_sandbox(sandbox_repo_path, sandbox_playbook_file, verbosity=0):
     # Check commit hash before update
     old_commit_hash = get_git_commit_hash(sandbox_repo_path)
 
-    git_fetch_and_reset(sandbox_repo_path, "master")
+    git_fetch_and_reset(sandbox_repo_path, "feature/cloudflare-tunnel-support")
 
     # Run Settings role with specified tags and skip-tags
     tags = ['settings']
@@ -793,7 +793,7 @@ def update_sb(sb_repo_path):
         sys.exit(1)
 
     # Perform git operations
-    git_fetch_and_reset(sb_repo_path, "master")
+    git_fetch_and_reset(sb_repo_path, "feature/cloudflare-tunnel-support")
 
     # Change permissions of sb.sh to 775
     sb_sh_path = os.path.join(sb_repo_path, 'sb.sh')
@@ -911,13 +911,13 @@ def check_and_update_repo(sb_repo_path):
             check=True
         )
 
-        # Get the current HEAD hash and the upstream master hash
+        # Get the current HEAD hash and the upstream feature/cloudflare-tunnel-support hash
         head_hash = subprocess.check_output(
             ['git', 'rev-parse', 'HEAD'],
             cwd=sb_repo_path
         ).strip()
         upstream_hash = subprocess.check_output(
-            ['git', 'rev-parse', 'master@{upstream}'],
+            ['git', 'rev-parse', 'feature/cloudflare-tunnel-support@{upstream}'],
             cwd=sb_repo_path
         ).strip()
 

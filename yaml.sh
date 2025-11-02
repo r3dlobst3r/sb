@@ -2,7 +2,7 @@
 # shellcheck disable=SC1003
 
 # Based on https://gist.github.com/pkuczynski/8665367
-# Source: https://github.com/jasperes/bash-yaml/blob/master/script/yaml.sh
+# Source: https://github.com/jasperes/bash-yaml/blob/feature/cloudflare-tunnel-support/script/yaml.sh
 
 parse_yaml() {
     local yaml_file=$1

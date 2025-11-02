@@ -120,7 +120,7 @@ if [ -d "/srv/git/cloudbox" ]; then
     exit 1
 fi
 
-# master
+# feature/cloudflare-tunnel-support
 for directory in /home/*/*/ ; do
     base=$(basename "$directory")
     if [ "$base" == "cloudbox" ]; then
@@ -205,7 +205,7 @@ fi
 # Clone SB repo
 run_cmd mkdir -p /srv/git
 run_cmd mkdir -p /srv/ansible
-run_cmd git clone --branch master "${SB_REPO}" "$SB_PATH"
+run_cmd git clone --branch feature/cloudflare-tunnel-support "${SB_REPO}" "$SB_PATH"
 
 download_binary
 

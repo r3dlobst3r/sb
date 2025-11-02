@@ -109,7 +109,7 @@ if [ -d "$SB_PATH" ]; then
 fi
 
 # Clone SB repo
-run_cmd git clone --branch master "${SB_REPO}" "$SB_PATH"
+run_cmd git clone --branch feature/cloudflare-tunnel-support "${SB_REPO}" "$SB_PATH"
 
 download_binary
 
