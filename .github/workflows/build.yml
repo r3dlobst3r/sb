@@ -18,7 +18,16 @@ permissions:
 
 jobs:
   build:
-    runs-on: self-hosted
+    strategy:
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+            binary_name: sb
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+            binary_name: sb-arm64
+    runs-on: ${{ matrix.runner }}
     steps:
       - name: Check-out repository
         uses: actions/checkout@v5
@@ -35,34 +44,34 @@ jobs:
       - name: Prepare script with version
         if: startsWith(github.ref, 'refs/tags/') && github.event_name != 'pull_request'
         run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
+          VERSION=${GITHUB_REF##refs/tags/}
           echo "Building with version ${VERSION}"
-          sed -i "s/__version__ = \"0.0.0\"/__version__ = \"${VERSION}\"/" sb.py
+          sed -i "s|__version__ = \"0.0.0\"|__version__ = \"${VERSION}\"|" sb.py
 
       - name: Compile binary
-        run: ./venv/bin/python -m nuitka sb.py --onefile -o sb && chmod +x sb
+        run: ./venv/bin/python -m nuitka sb.py --onefile -o ${{ matrix.binary_name }} && chmod +x ${{ matrix.binary_name }}
 
       - name: Upload artifact
         if: startsWith(github.ref, 'refs/tags/') != true
         uses: actions/upload-artifact@v4
         with:
-          name: sb
-          path: sb
+          name: ${{ matrix.binary_name }}
+          path: ${{ matrix.binary_name }}
 
       - name: Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/') && github.event_name != 'pull_request'
         with:
           files: |
-            sb
+            ${{ matrix.binary_name }}
 
       - name: Run release workflow 
-        if: startsWith(github.ref, 'refs/tags/') && github.event_name != 'pull_request'
+        if: startsWith(github.ref, 'refs/tags/') && github.event_name != 'pull_request' && matrix.arch == 'amd64'
         run: gh workflow run release.yml -f release_tag=${{ github.ref }}
         env:
           GH_TOKEN: ${{ github.token }}
 
       - uses: sarisia/actions-status-discord@v1
-        if: always() && startsWith(github.ref, 'refs/tags/') && github.event_name != 'pull_request'
+        if: always() && startsWith(github.ref, 'refs/tags/') && github.event_name != 'pull_request' && matrix.arch == 'amd64'
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
