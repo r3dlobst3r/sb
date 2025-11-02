@@ -2,7 +2,7 @@
 #########################################################################
 # Title:         Saltbox Repo Cloner Script                             #
 # Author(s):     desimaniac, salty                                      #
-# URL:           https://github.com/saltyorg/sb                         #
+# URL:           https://github.com/r3dlobst3r/sb                         #
 # --                                                                    #
 #########################################################################
 #                   GNU General Public License v3.0                     #
@@ -15,7 +15,7 @@
 VERBOSE=false
 BRANCH="master"
 SALTBOX_PATH="/srv/git/saltbox"
-SALTBOX_REPO="https://github.com/saltyorg/saltbox.git"
+SALTBOX_REPO="https://github.com/r3dlobst3r/saltbox.git"
 
 ################################
 # Functions
@@ -128,7 +128,7 @@ cd "$SALTBOX_PATH" || exit
 run_cmd bash "$SALTBOX_PATH/bin/git/init-hooks"
 
 ## Download saltbox.fact file
-FACT_URL="https://github.com/saltyorg/ansible-facts/releases/latest/download/saltbox-facts"
+FACT_URL="https://github.com/r3dlobst3r/ansible-facts/releases/latest/download/saltbox-facts"
 FACT_PATH="$SALTBOX_PATH/ansible_facts.d/saltbox.fact"
 
 $VERBOSE && echo "Downloading the saltbox.fact file..."

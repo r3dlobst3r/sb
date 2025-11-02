@@ -2,7 +2,7 @@
 #########################################################################
 # Title:         Saltbox: sb Binary Wrapper                             #
 # Author(s):     salty                                                  #
-# URL:           https://github.com/saltyorg/sb                         #
+# URL:           https://github.com/r3dlobst3r/sb                         #
 # --                                                                    #
 #########################################################################
 #                   GNU General Public License v3.0                     #
@@ -60,7 +60,7 @@ download_binary() {
         exit 1
     fi
 
-    download_url="https://github.com/saltyorg/sb/releases/download/$version/sb"
+    download_url="https://github.com/r3dlobst3r/sb/releases/download/$version/sb"
 
     temp_binary_path="${TARGET_BINARY_PATH}.tmp"
     run_cmd curl -L -o "${temp_binary_path}" "${download_url}" > /dev/null 2>&1

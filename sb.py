@@ -610,9 +610,9 @@ def download_and_install_saltbox_fact(always_update=False):
         IOError: If there's an error writing the file.
         Exception: For any other unexpected errors.
     """
-    download_url = "https://github.com/saltyorg/ansible-facts/releases/latest/download/saltbox-facts"
+    download_url = "https://github.com/r3dlobst3r/ansible-facts/releases/latest/download/saltbox-facts"
     target_path = "/srv/git/saltbox/ansible_facts.d/saltbox.fact"
-    api_url = "https://api.github.com/repos/saltyorg/ansible-facts/releases/latest"
+    api_url = "https://api.github.com/repos/r3dlobst3r/ansible-facts/releases/latest"
 
     try:
         # Fetch the latest release info from GitHub
@@ -827,7 +827,7 @@ def update_sb(sb_repo_path):
         sys.exit(1)
 
     # Form the URL for the binary download
-    download_url = f"https://github.com/saltyorg/sb/releases/download/{version}/sb"
+    download_url = f"https://github.com/r3dlobst3r/sb/releases/download/{version}/sb"
 
     # Download the binary file
     response = requests.get(download_url)
