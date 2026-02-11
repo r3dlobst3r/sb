@@ -28,22 +28,16 @@ BRANCH_OPT=""
 ################################
 
 run_cmd() {
-    local error_output
     local cmd_exit_code
 
-    if $VERBOSE; then
-        printf '%s\n' "+ $*" >&2
-        "$@"
-    else
-        error_output=$("$@" 2>&1)
-    fi
+    # Print the command being executed
+    printf '%s\n' "+ $*" >&2
+
+    "$@"
     cmd_exit_code=$?
 
     if [ $cmd_exit_code -ne 0 ]; then
         echo "Command failed with exit code $cmd_exit_code: $*" >&2
-        if [ -n "$error_output" ]; then
-            echo "Error output: $error_output" >&2
-        fi
         exit $cmd_exit_code
     fi
 }
@@ -56,13 +50,14 @@ download_binary() {
     local file_type
 
     if ! command -v file > /dev/null 2>&1; then
-        run_cmd sudo apt-get update
-        run_cmd sudo apt-get install -y file
+        run_cmd apt-get update
+        run_cmd apt-get install -y file
     fi
 
     api_url="https://api.github.com/repos/saltyorg/sb-go/releases/latest"
 
-    version=$(curl -s "${api_url}" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+    # Silent but fail properly on HTTP errors
+    version=$(curl -fsSL "${api_url}" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
     if [ -z "$version" ]; then
         echo "Error: Could not determine latest version from GitHub API." >&2
         exit 1
@@ -73,7 +68,9 @@ download_binary() {
     download_url="https://github.com/saltyorg/sb-go/releases/download/${version}/sb_linux_amd64"
 
     temp_binary_path="${TARGET_BINARY_PATH}.tmp"
-    run_cmd curl -L -o "${temp_binary_path}" "${download_url}"
+
+    # Silence curl progress but preserve errors
+    run_cmd curl -fsSL -o "${temp_binary_path}" "${download_url}"
 
     file_type=$(file -b --mime-type "${temp_binary_path}")
     if [[ "$file_type" != application/* ]]; then
