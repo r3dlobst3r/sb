@@ -2,7 +2,7 @@
 #########################################################################
 # Title:         Saltbox sb Re-install Script                           #
 # Author(s):     salty                                                  #
-# URL:           https://github.com/saltyorg/sb                         #
+# URL:           https://github.com/r3dlobst3r/sb                         #
 # --                                                                    #
 #########################################################################
 #                   GNU General Public License v3.0                     #
@@ -21,7 +21,7 @@ fi
 # Variables
 ################################
 
-SB_REPO="https://github.com/saltyorg/sb.git"
+SB_REPO="https://github.com/r3dlobst3r/sb.git"
 SB_PATH="/srv/git/sb"
 RELEASE_FILE="/srv/git/sb/release.txt"
 TARGET_BINARY_PATH="/srv/git/sb/sb"
@@ -80,7 +80,7 @@ download_binary() {
         exit 1
     fi
 
-    download_url="https://github.com/saltyorg/sb/releases/download/$version/sb"
+    download_url="https://github.com/r3dlobst3r/sb/releases/download/$version/sb"
 
     temp_binary_path="${TARGET_BINARY_PATH}.tmp"
     run_cmd curl -L -o "${temp_binary_path}" "${download_url}"

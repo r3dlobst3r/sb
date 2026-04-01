@@ -3,7 +3,7 @@
 #########################################################################
 # Title:         Saltbox Install Script                                 #
 # Author(s):     desimaniac, salty                                      #
-# URL:           https://github.com/saltyorg/sb                         #
+# URL:           https://github.com/r3dlobst3r/sb                         #
 # --                                                                    #
 #########################################################################
 #                   GNU General Public License v3.0                     #
@@ -15,7 +15,7 @@
 
 VERBOSE=false
 VERBOSE_OPT=""
-SB_REPO="https://github.com/saltyorg/sb.git"
+SB_REPO="https://github.com/r3dlobst3r/sb.git"
 SB_PATH="/srv/git/sb"
 TARGET_BINARY_PATH="/usr/local/bin/sb"
 SB_INSTALL_SCRIPT="$SB_PATH/sb_install.sh"
@@ -54,7 +54,7 @@ download_binary() {
         run_cmd apt-get install -y file
     fi
 
-    api_url="https://api.github.com/repos/saltyorg/sb-go/releases/latest"
+    api_url="https://api.github.com/repos/r3dlobst3r/sb-go/releases/latest"
 
     # Silent but fail properly on HTTP errors
     version=$(curl -fsSL "${api_url}" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
@@ -65,7 +65,7 @@ download_binary() {
 
     echo "Latest sb-go version: $version"
 
-    download_url="https://github.com/saltyorg/sb-go/releases/download/${version}/sb_linux_amd64"
+    download_url="https://github.com/r3dlobst3r/sb-go/releases/download/${version}/sb_linux_amd64"
 
     temp_binary_path="${TARGET_BINARY_PATH}.tmp"
 

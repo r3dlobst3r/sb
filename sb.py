@@ -610,9 +610,9 @@ def download_and_install_saltbox_fact(always_update=False):
         IOError: If there's an error writing the file.
         Exception: For any other unexpected errors.
     """
-    download_url = "https://github.com/saltyorg/ansible-facts/releases/latest/download/saltbox-facts"
+    download_url = "https://github.com/r3dlobst3r/ansible-facts/releases/latest/download/saltbox-facts"
     target_path = "/srv/git/saltbox/ansible_facts.d/saltbox.fact"
-    api_url = "https://api.github.com/repos/saltyorg/ansible-facts/releases/latest"
+    api_url = "https://api.github.com/repos/r3dlobst3r/ansible-facts/releases/latest"
 
     try:
         # Fetch the latest release info from GitHub
@@ -808,7 +808,7 @@ def update_sb(sb_repo_path):
     target_binary_path = "/usr/local/bin/sb"
 
     # Fetch the latest release from sb-go repository
-    api_url = "https://api.github.com/repos/saltyorg/sb-go/releases/latest"
+    api_url = "https://api.github.com/repos/r3dlobst3r/sb-go/releases/latest"
 
     try:
         response = requests.get(api_url)
