@@ -65,7 +65,7 @@ download_binary() {
 
     echo "Latest sb-go version: $version"
 
-    download_url="https://github.com/r3dlobst3r/sb-go/releases/download/${version}/sb_linux_amd64"
+    download_url="https://github.com/r3dlobst3r/sb-go/releases/download/${version}/sb_linux_arm64"
 
     temp_binary_path="${TARGET_BINARY_PATH}.tmp"
 

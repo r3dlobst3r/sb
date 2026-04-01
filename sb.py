@@ -824,8 +824,8 @@ def update_sb(sb_repo_path):
         print(f"Latest sb-go version: {version}")
 
         # Find the appropriate asset for the current platform
-        # Currently sb-go only has sb_linux_amd64
-        asset_name = "sb_linux_amd64"
+        # Currently sb-go only has sb_linux_arm64
+        asset_name = "sb_linux_arm64"
 
         assets = latest_release.get('assets', [])
         download_url = None
