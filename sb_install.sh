@@ -20,7 +20,7 @@ SB_PATH="/srv/git/sb"
 TARGET_BINARY_PATH="/usr/local/bin/sb"
 SB_INSTALL_SCRIPT="$SB_PATH/sb_install.sh"
 SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
-BRANCH="master"
+BRANCH="arm-support"
 BRANCH_OPT=""
 
 ################################
