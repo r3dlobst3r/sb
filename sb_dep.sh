@@ -115,15 +115,25 @@ run_cmd run_cmd apt-get update
 # Check for supported Ubuntu Releases
 release=$(lsb_release -cs) || error "Failed to determine Ubuntu release"
 
+## Detect architecture for repository URLs
+ARCH=$(uname -m)
+if [[ "$ARCH" == "aarch64" || "$ARCH" == "arm64" ]]; then
+    REPO_URL="http://ports.ubuntu.com/ubuntu-ports/"
+    SECURITY_URL="http://ports.ubuntu.com/ubuntu-ports/"
+else
+    REPO_URL="http://archive.ubuntu.com/ubuntu/"
+    SECURITY_URL="http://security.ubuntu.com/ubuntu/"
+fi
+
 ## Add apt repos
 if [[ $release =~ (jammy)$ ]]; then
     sources_file="/etc/apt/sources.list"
 
     run_cmd rm -rf /etc/apt/sources.list.d/*
-    add_repo "deb http://archive.ubuntu.com/ubuntu/ $(lsb_release -sc) main" "$sources_file"
-    add_repo "deb http://archive.ubuntu.com/ubuntu/ $(lsb_release -sc) universe" "$sources_file"
-    add_repo "deb http://archive.ubuntu.com/ubuntu/ $(lsb_release -sc) restricted" "$sources_file"
-    add_repo "deb http://archive.ubuntu.com/ubuntu/ $(lsb_release -sc) multiverse" "$sources_file"
+    add_repo "deb $REPO_URL $(lsb_release -sc) main" "$sources_file"
+    add_repo "deb $REPO_URL $(lsb_release -sc) universe" "$sources_file"
+    add_repo "deb $REPO_URL $(lsb_release -sc) restricted" "$sources_file"
+    add_repo "deb $REPO_URL $(lsb_release -sc) multiverse" "$sources_file"
 
     run_cmd apt-get update
 
@@ -131,10 +141,10 @@ elif [[ $release =~ (noble)$ ]]; then
     sources_file="/etc/apt/sources.list"
 
     run_cmd find /etc/apt/sources.list.d/ -type f ! -name "ubuntu.sources" -delete
-    add_repo "deb http://archive.ubuntu.com/ubuntu/ $(lsb_release -sc) main restricted universe multiverse" "$sources_file"
-    add_repo "deb http://archive.ubuntu.com/ubuntu/ $(lsb_release -sc)-updates main restricted universe multiverse" "$sources_file"
-    add_repo "deb http://archive.ubuntu.com/ubuntu/ $(lsb_release -sc)-backports main restricted universe multiverse" "$sources_file"
-    add_repo "deb http://security.ubuntu.com/ubuntu $(lsb_release -sc)-security main restricted universe multiverse" "$sources_file"
+    add_repo "deb $REPO_URL $(lsb_release -sc) main restricted universe multiverse" "$sources_file"
+    add_repo "deb $REPO_URL $(lsb_release -sc)-updates main restricted universe multiverse" "$sources_file"
+    add_repo "deb $REPO_URL $(lsb_release -sc)-backports main restricted universe multiverse" "$sources_file"
+    add_repo "deb $SECURITY_URL $(lsb_release -sc)-security main restricted universe multiverse" "$sources_file"
 
     run_cmd apt-get update
 
